@@ -1,0 +1,41 @@
+<%- include('homeLayouts/header.ejs') %>    
+    
+  <div class="container my-5">
+    <div class="row text-center">
+      <% if(user) { %>
+        <h1>Wecome to Magazine, <span><%= user.username %></span></h1>
+      <% } %>
+       
+    </div>
+    <div class="row text-center">
+      <% if (message) { %>
+        <div class="alert alert-dismissible fade show alert-<%= message.type %>" role="alert">
+            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong><%= message.message %></strong>
+        </div>
+      <% } %>
+    </div>
+    <div class="col grid-margin stretch-card">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Bar chart</h4>
+          <canvas id="myChart" width="400" height="200"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Lấy tham số chartConfig từ server-side render
+        const chartConfig = JSON.parse(`<%- JSON.stringify(chartConfig) %>`);
+        
+        // Vẽ biểu đồ bằng Chart.js
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, chartConfig);
+    });
+</script>
+ 
+
+
+  <%- include('homeLayouts/footer.ejs') %>
